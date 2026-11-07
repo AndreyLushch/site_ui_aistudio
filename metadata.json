@@ -1,0 +1,7 @@
+{
+  "name": "Настолки — Игры для компании в Telegram",
+  "description": "Витрина настольных игр для живой компании внутри Telegram (Mini App) и магазин жетонов с оплатой картой или СБП.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
