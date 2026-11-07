@@ -35,7 +35,7 @@ test('code generator creates 16 chars without 0, O, 1, I', () => {
 });
 
 test('email masking masks local part accurately', () => {
-  assert.equal(maskEmail('andrey.lusch@gmail.com'), 'a***@gmail.com');
+  assert.equal(maskEmail('ivanov@example.com'), 'i***@example.com');
   assert.equal(maskEmail('test@mail.ru'), 't***@mail.ru');
   assert.equal(maskEmail('x@test.com'), 'x***@test.com');
 });

@@ -3,8 +3,8 @@ import { SiteUser } from '../types';
 export const USER_FIXTURES: Record<string, SiteUser> = {
   standard: {
     telegramId: '482019482',
-    displayName: 'Андрей Лущиков',
-    username: 'andrey_l',
+    displayName: 'Иван Иванов',
+    username: 'ivan_ivanov',
     photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
     balanceTokens: 35,
   },
@@ -17,8 +17,8 @@ export const USER_FIXTURES: Record<string, SiteUser> = {
   },
   longName: {
     telegramId: '772910481',
-    displayName: 'Александр-Константин фон Бисмарк-Вяземский',
-    username: 'von_bismarck_official_profile',
+    displayName: 'Константин Александров',
+    username: 'konstantin_alex',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
     balanceTokens: 120,
   },

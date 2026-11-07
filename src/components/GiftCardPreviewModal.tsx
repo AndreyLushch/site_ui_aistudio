@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, Printer, Gift, Sparkles } from 'lucide-react';
 import { TokenCoinIcon } from './TokenCoinIcon';
-import { TELEGRAM_BOT_USERNAME } from '../texts';
+import { texts, TELEGRAM_BOT_USERNAME } from '../texts';
 
 interface GiftCardPreviewModalProps {
   code: string;
@@ -25,10 +25,10 @@ export const GiftCardPreviewModal: React.FC<GiftCardPreviewModalProps> = ({
       aria-modal="true"
       aria-labelledby="gift-card-modal-title"
     >
-      <div className="w-full max-w-lg bg-white dark:bg-[#1d1915] rounded-3xl border border-[#e9dfcf] dark:border-[#3a3127] shadow-2xl p-6 sm:p-8 relative text-[#1f1a14] dark:text-[#f5efe6]">
+      <div className="w-full max-w-lg bg-[var(--color-card)] rounded-3xl border border-[var(--color-line)] shadow-2xl p-6 sm:p-8 relative text-[var(--color-text)]">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-[#6b5f50] dark:text-[#b5a998] hover:text-[#1f1a14] dark:hover:text-white rounded-lg no-print min-h-[44px] min-w-[44px] flex items-center justify-center"
+          className="absolute top-4 right-4 p-2 text-[var(--color-secondary-text)] hover:text-[var(--color-text)] rounded-lg no-print min-h-[44px] min-w-[44px] flex items-center justify-center"
           aria-label="Закрыть"
         >
           <X className="w-5 h-5" />
@@ -38,45 +38,45 @@ export const GiftCardPreviewModal: React.FC<GiftCardPreviewModalProps> = ({
           <h2 id="gift-card-modal-title" className="text-xl font-bold font-serif">
             Подарочная открытка
           </h2>
-          <p className="text-sm text-[#6b5f50] dark:text-[#b5a998]">
-            Вы можете распечатать эту открытку или сделать скриншот и отправить другу
+          <p className="text-sm text-[var(--color-secondary-text)]">
+            Ты можешь распечатать эту открытку или сделать скриншот и отправить другу
           </p>
         </div>
 
         {/* Printable Gift Card Body */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#fdf8ef] via-[#fffbf5] to-[#f3ece1] border-2 border-amber-600/40 text-[#1f1a14] shadow-md relative overflow-hidden">
+        <div className="p-6 sm:p-8 rounded-2xl bg-[var(--color-warm-card)] border-2 border-amber-600/40 text-[var(--color-text)] shadow-md relative overflow-hidden">
           <div className="flex items-center justify-between border-b border-amber-900/10 pb-4 mb-6">
             <div className="flex items-center gap-2">
-              <TokenCoinIcon className="w-8 h-8 text-amber-700" />
+              <TokenCoinIcon className="w-8 h-8 text-amber-700 dark:text-amber-400" />
               <div>
-                <span className="font-serif font-bold text-lg text-amber-950 block leading-tight">
-                  Настолки
+                <span className="font-serif font-bold text-lg text-amber-950 dark:text-amber-200 block leading-tight">
+                  {texts.brand.name}
                 </span>
-                <span className="text-xs text-amber-800">Игры для компании в Telegram</span>
+                <span className="text-sm text-amber-800 dark:text-amber-400">{texts.giftCard.subtitle}</span>
               </div>
             </div>
             <div className="text-right">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block">
-                Подарок
+              <span className="text-sm font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400 block">
+                {texts.vocabulary.gift}
               </span>
-              <span className="text-2xl font-black font-serif text-amber-900 tabular-nums">
+              <span className="text-2xl font-black font-serif text-amber-900 dark:text-amber-300 tabular-nums">
                 +{tokens} жетонов
               </span>
             </div>
           </div>
 
           <div className="my-6 text-center">
-            <p className="text-sm text-stone-700 mb-2 font-medium">Твой секретный код активации:</p>
-            <div className="font-mono text-xl sm:text-2xl font-extrabold tracking-widest text-amber-950 py-3 px-4 bg-white/90 rounded-xl border border-amber-300 inline-block shadow-xs select-all">
+            <p className="text-sm text-stone-700 dark:text-stone-300 mb-2 font-medium">{texts.giftCard.secretCodeLabel}</p>
+            <div className="font-mono text-xl sm:text-2xl font-extrabold tracking-widest text-amber-950 dark:text-amber-200 py-3 px-4 bg-[var(--color-card)] rounded-xl border border-amber-300 dark:border-amber-700 inline-block shadow-xs select-all">
               {code}
             </div>
           </div>
 
-          <div className="pt-4 border-t border-amber-900/10 text-xs text-stone-600 space-y-1">
-            <p className="font-semibold text-stone-800">Как активировать:</p>
-            <p>1. Открой бот <strong>@{TELEGRAM_BOT_USERNAME}</strong> в Telegram.</p>
-            <p>2. Нажми «Пополнить → Ввести код» или перейди на сайт в раздел «Активация».</p>
-            <p>3. Собирай компанию за стол и наслаждайся играми!</p>
+          <div className="pt-4 border-t border-amber-900/10 text-sm text-stone-600 dark:text-stone-400 space-y-1">
+            <p className="font-semibold text-stone-800 dark:text-stone-200">{texts.giftCard.howToActivate}</p>
+            <p>{texts.giftCard.step1(TELEGRAM_BOT_USERNAME)}</p>
+            <p>{texts.giftCard.step2}</p>
+            <p>{texts.giftCard.step3}</p>
           </div>
         </div>
 
@@ -85,17 +85,17 @@ export const GiftCardPreviewModal: React.FC<GiftCardPreviewModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 text-sm font-medium text-[#6b5f50] dark:text-[#b5a998] hover:text-[#1f1a14] rounded-xl min-h-[44px]"
+            className="px-4 py-2.5 text-sm font-medium text-[var(--color-secondary-text)] hover:text-[var(--color-text)] rounded-xl min-h-[44px] cursor-pointer"
           >
-            Закрыть
+            {texts.actions.close}
           </button>
           <button
             type="button"
             onClick={() => window.print()}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-semibold text-sm transition-colors min-h-[44px] shadow-sm"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--color-primary-action)] hover:bg-[var(--color-primary-action-hover)] text-white font-semibold text-sm transition-colors min-h-[44px] shadow-sm cursor-pointer"
           >
             <Printer className="w-4 h-4" />
-            <span>Распечатать открытку</span>
+            <span>{texts.giftCard.printButton}</span>
           </button>
         </div>
       </div>

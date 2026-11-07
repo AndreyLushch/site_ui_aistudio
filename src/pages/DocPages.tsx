@@ -1,53 +1,42 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { texts } from '../texts';
-import { Shield, FileText, Phone, Mail, MapPin } from 'lucide-react';
+import { Shield, FileText, Mail } from 'lucide-react';
 
 export const DocPages: React.FC = () => {
   const location = useLocation();
   const path = location.pathname;
 
   if (path === '/offer') {
+    const t = texts.docs.offer;
     return (
       <div data-testid="site-page-offer" className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-6">
         <div className="flex items-center gap-2.5 text-amber-700 dark:text-amber-400">
           <FileText className="w-5 h-5" />
-          <span className="text-xs font-bold uppercase tracking-wider">Юридический документ</span>
+          <span className="text-sm font-bold uppercase tracking-wider">{t.badge}</span>
         </div>
-        <h1 className="text-3xl font-serif font-bold text-[#1f1a14] dark:text-[#f5efe6]">
-          Публичная оферта на оказание услуг
+        <h1 className="text-3xl font-serif font-bold text-[var(--color-text)]">
+          {t.title}
         </h1>
-        <p className="text-xs text-[#6b5f50] dark:text-[#b5a998]">
-          Редакция от 1 января 2026 года · Настоящий документ является публичной офертой в соответствии со статьей 437 ГК РФ.
+        <p className="text-sm text-[var(--color-secondary-text)]">
+          {t.edition}
         </p>
 
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] space-y-4 text-sm text-[#1f1a14] dark:text-[#f5efe6] leading-relaxed">
-          <h2 className="font-bold text-base font-serif">1. Общие положения</h2>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            1.1. Индивидуальный предприниматель Лущиков А. В. (далее — «Исполнитель») предлагает физическим лицам (далее — «Заказчик») заключить настоящий договор на условиях предоставления доступа к сервису цифровых настольных игр «Настолки» в Telegram Mini App.
-          </p>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            1.2. Акцептом настоящей оферты является совершение Заказчиком оплаты пакета жетонов на сайте либо ввод кода активации.
-          </p>
+        <div className="p-6 rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)] space-y-4 text-sm text-[var(--color-text)] leading-relaxed">
+          <h2 className="font-bold text-base font-serif">{t.sec1Title}</h2>
+          <p className="text-[var(--color-secondary-text)]">{t.sec1P1}</p>
+          <p className="text-[var(--color-secondary-text)]">{t.sec1P2}</p>
 
-          <h2 className="font-bold text-base font-serif pt-2">2. Предмет договора</h2>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            2.1. Исполнитель обязуется предоставить Заказчику цифровую внутрисервисную валюту — «жетоны» — предназначенную исключительно для запуска игровых партий на платформе «Настолки» в Telegram.
-          </p>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            2.2. Жетоны не являются электронными денежными средствами или ценными бумагами и не подлежат обмену на наличные деньги, кроме случаев, прямо предусмотренных законодательством РФ.
-          </p>
+          <h2 className="font-bold text-base font-serif pt-2">{t.sec2Title}</h2>
+          <p className="text-[var(--color-secondary-text)]">{t.sec2P1}</p>
+          <p className="text-[var(--color-secondary-text)]">{t.sec2P2}</p>
 
-          <h2 className="font-bold text-base font-serif pt-2">3. Порядок оплаты и выдачи жетонов</h2>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            3.1. Оплата производится банковскими картами платёжных систем МИР, Visa, MasterCard или через СБП на защищённой платёжной странице банка-эквайера.
-          </p>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            3.2. При успешном платеже жетоны зачисляются на баланс профиля в Telegram либо предоставляется уникальный 16-значный код активации.
-          </p>
+          <h2 className="font-bold text-base font-serif pt-2">{t.sec3Title}</h2>
+          <p className="text-[var(--color-secondary-text)]">{t.sec3P1}</p>
+          <p className="text-[var(--color-secondary-text)]">{t.sec3P2}</p>
 
-          <h2 className="font-bold text-base font-serif pt-2">4. Реквизиты Исполнителя</h2>
-          <p className="text-xs text-[#6b5f50] dark:text-[#b5a998] font-mono">
+          <h2 className="font-bold text-base font-serif pt-2">{t.sec4Title}</h2>
+          <p className="text-sm text-[var(--color-secondary-text)] font-mono">
             {texts.footer.requisites}
           </p>
         </div>
@@ -56,100 +45,96 @@ export const DocPages: React.FC = () => {
   }
 
   if (path === '/privacy') {
+    const t = texts.docs.privacy;
     return (
       <div data-testid="site-page-privacy" className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-6">
         <div className="flex items-center gap-2.5 text-amber-700 dark:text-amber-400">
           <Shield className="w-5 h-5" />
-          <span className="text-xs font-bold uppercase tracking-wider">Безопасность данных</span>
+          <span className="text-sm font-bold uppercase tracking-wider">{t.badge}</span>
         </div>
-        <h1 className="text-3xl font-serif font-bold text-[#1f1a14] dark:text-[#f5efe6]">
-          Политика конфиденциальности
+        <h1 className="text-3xl font-serif font-bold text-[var(--color-text)]">
+          {t.title}
         </h1>
-        <p className="text-xs text-[#6b5f50] dark:text-[#b5a998]">
-          Обработка персональных данных в соответствии с Федеральным законом № 152-ФЗ «О персональных данных».
+        <p className="text-sm text-[var(--color-secondary-text)]">
+          {t.edition}
         </p>
 
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] space-y-4 text-sm text-[#1f1a14] dark:text-[#f5efe6] leading-relaxed">
-          <h2 className="font-bold text-base font-serif">1. Какие данные мы собираем</h2>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            Мы запрашиваем адрес электронной почты исключительно для направления электронного чека (в соответствии с 54-ФЗ) и отправки кода активации. При входе через Telegram сервис получает ваш идентификатор Telegram ID и публичное имя профиля.
-          </p>
+        <div className="p-6 rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)] space-y-4 text-sm text-[var(--color-text)] leading-relaxed">
+          <h2 className="font-bold text-base font-serif">{t.sec1Title}</h2>
+          <p className="text-[var(--color-secondary-text)]">{t.sec1P1}</p>
 
-          <h2 className="font-bold text-base font-serif pt-2">2. Данные банковских карт</h2>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            Сайт «Настолки» <strong>не собирает, не хранит и не обрабатывает</strong> полные номера банковских карт, сроки их действия или CVC/CVV коды. Вся платёжная информация вводится напрямую в сертифицированный защищённый платёжный шлюз банка.
-          </p>
+          <h2 className="font-bold text-base font-serif pt-2">{t.sec2Title}</h2>
+          <p className="text-[var(--color-secondary-text)]">{t.sec2P1}</p>
 
-          <h2 className="font-bold text-base font-serif pt-2">3. Передача третьим лицам</h2>
-          <p className="text-[#6b5f50] dark:text-[#b5a998]">
-            Персональные данные Заказчика передаются только операторам фискальных данных (ОФД) и банку-эквайеру для формирования чека и проведения оплаты. Данные не передаются рекламным сетям.
-          </p>
+          <h2 className="font-bold text-base font-serif pt-2">{t.sec3Title}</h2>
+          <p className="text-[var(--color-secondary-text)]">{t.sec3P1}</p>
         </div>
       </div>
     );
   }
 
   // Contacts
+  const t = texts.docs.contacts;
   return (
     <div data-testid="site-page-contacts" className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-16 space-y-6">
       <div className="flex items-center gap-2.5 text-amber-700 dark:text-amber-400">
         <Mail className="w-5 h-5" />
-        <span className="text-xs font-bold uppercase tracking-wider">Связь с нами</span>
+        <span className="text-sm font-bold uppercase tracking-wider">{t.badge}</span>
       </div>
-      <h1 className="text-3xl font-serif font-bold text-[#1f1a14] dark:text-[#f5efe6]">
-        Контакты и реквизиты
+      <h1 className="text-3xl font-serif font-bold text-[var(--color-text)]">
+        {t.title}
       </h1>
-      <p className="text-sm text-[#6b5f50] dark:text-[#b5a998]">
-        По любым вопросам работы сайта, покупкам и начислению жетонов пишите в службу заботы.
+      <p className="text-sm text-[var(--color-secondary-text)]">
+        {t.subtitle}
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] space-y-3">
-          <h2 className="font-bold text-base font-serif text-[#1f1a14] dark:text-[#f5efe6]">
-            Служба поддержки
+        <div className="p-6 rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)] space-y-3">
+          <h2 className="font-bold text-base font-serif text-[var(--color-text)]">
+            {t.supportTitle}
           </h2>
-          <div className="space-y-2 text-sm text-[#6b5f50] dark:text-[#b5a998]">
+          <div className="space-y-2 text-sm text-[var(--color-secondary-text)]">
             <p className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-amber-600" />
-              <a href="mailto:support@nastolki.app" className="text-amber-800 dark:text-amber-400 hover:underline">
-                support@nastolki.app
+              <Mail className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <a href={`mailto:${t.supportEmail}`} className="text-amber-800 dark:text-amber-400 hover:underline">
+                {t.supportEmail}
               </a>
             </p>
             <p className="flex items-center gap-2">
-              <span className="text-xs">Время ответа: до 2 часов с 09:00 до 22:00 МСК</span>
+              <span className="text-sm">{t.supportTime}</span>
             </p>
           </div>
         </div>
 
-        <div className="p-6 rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] space-y-3">
-          <h2 className="font-bold text-base font-serif text-[#1f1a14] dark:text-[#f5efe6]">
-            Telegram бот
+        <div className="p-6 rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)] space-y-3">
+          <h2 className="font-bold text-base font-serif text-[var(--color-text)]">
+            {t.botTitle}
           </h2>
-          <div className="space-y-2 text-sm text-[#6b5f50] dark:text-[#b5a998]">
+          <div className="space-y-2 text-sm text-[var(--color-secondary-text)]">
             <p>
-              Официальный бот сервиса: <strong>@{texts.brand.name}Bot</strong>
+              {t.botDesc} <strong>@{texts.brand.name}Bot</strong>
             </p>
             <a
               href={`https://t.me/${texts.brand.name}Bot`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 dark:text-amber-400 hover:underline"
+              className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-800 dark:text-amber-400 hover:underline"
             >
-              <span>Открыть в Telegram</span>
+              <span>{t.botAction}</span>
             </a>
           </div>
         </div>
       </div>
 
-      <div className="p-6 rounded-3xl bg-[#fdf8ef] dark:bg-[#231d16] border border-[#e9dfcf] dark:border-[#3a3127] space-y-2 text-xs text-[#6b5f50] dark:text-[#b5a998]">
-        <h3 className="font-bold text-sm text-[#1f1a14] dark:text-[#f5efe6] font-serif mb-2">
-          Реквизиты юрлица (заглушка)
+      <div className="p-6 rounded-3xl bg-[var(--color-warm-card)] border border-[var(--color-line)] space-y-2 text-sm text-[var(--color-secondary-text)]">
+        <h3 className="font-bold text-base text-[var(--color-text)] font-serif mb-2">
+          {t.requisitesBadge}
         </h3>
-        <p>Индивидуальный предприниматель: Лущиков Андрей Владимирович</p>
-        <p>ОГРНИП: 324774600123456</p>
-        <p>ИНН: 772812345678</p>
-        <p>Расчётный счёт: 40802810900000123456 в АО «Банк Точка»</p>
-        <p>БИК: 044525104 · К/с: 30101810745374525104</p>
+        <p>{t.pIp}</p>
+        <p>{t.pOgrnip}</p>
+        <p>{t.pInn}</p>
+        <p>{t.pAccount}</p>
+        <p>{t.pBik}</p>
       </div>
     </div>
   );

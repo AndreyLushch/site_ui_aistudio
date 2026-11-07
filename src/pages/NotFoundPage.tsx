@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TokenCoinIcon } from '../components/TokenCoinIcon';
-import { ArrowLeft, Home, Dice5 } from 'lucide-react';
+import { Dice5, Home } from 'lucide-react';
+import { texts } from '../texts';
 
 export const NotFoundPage: React.FC = () => {
+  const t = texts.notFound;
   return (
     <div
       data-testid="site-page-404"
@@ -15,30 +16,30 @@ export const NotFoundPage: React.FC = () => {
 
       <div className="space-y-2">
         <span className="font-mono text-sm font-bold text-amber-700 dark:text-amber-400">
-          Ошибка 404
+          {t.badge}
         </span>
-        <h1 className="text-3xl font-serif font-bold text-[#1f1a14] dark:text-[#f5efe6]">
-          Похоже, фишка потерялась
+        <h1 className="text-3xl font-serif font-bold text-[var(--color-text)]">
+          {t.title}
         </h1>
-        <p className="text-sm text-[#6b5f50] dark:text-[#b5a998] leading-relaxed">
-          Такой страницы нет, но на нашем игровом столе ещё много отличных игр для вашей компании!
+        <p className="text-sm text-[var(--color-secondary-text)] leading-relaxed">
+          {t.desc}
         </p>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
         <Link
           to="/games"
-          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-semibold text-sm transition-colors min-h-[44px]"
+          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-xl bg-[var(--color-primary-action)] hover:bg-[var(--color-primary-action-hover)] text-[var(--color-primary-action-text)] font-semibold text-sm transition-colors min-h-[44px]"
         >
           <Dice5 className="w-4 h-4" />
-          <span>Перейти в каталог игр</span>
+          <span>{t.toCatalog}</span>
         </Link>
         <Link
           to="/"
-          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 rounded-xl border border-[#e9dfcf] dark:border-[#3a3127] bg-white dark:bg-[#1d1915] text-[#1f1a14] dark:text-[#f5efe6] font-semibold text-sm hover:bg-amber-500/10 transition-colors min-h-[44px]"
+          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-3 rounded-xl border border-[var(--color-line)] bg-[var(--color-card)] text-[var(--color-text)] font-semibold text-sm hover:bg-amber-500/10 transition-colors min-h-[44px]"
         >
           <Home className="w-4 h-4" />
-          <span>На главную</span>
+          <span>{t.toHome}</span>
         </Link>
       </div>
     </div>

@@ -160,20 +160,20 @@ export const PageMapModal: React.FC = () => {
       aria-modal="true"
       aria-labelledby="pagemap-modal-title"
     >
-      <div className="w-full max-w-4xl max-h-[90vh] bg-white dark:bg-[#1d1915] rounded-3xl border border-[#e9dfcf] dark:border-[#3a3127] shadow-2xl flex flex-col overflow-hidden text-[#1f1a14] dark:text-[#f5efe6]">
+      <div className="w-full max-w-4xl max-h-[90vh] bg-[var(--color-card)] rounded-3xl border border-[var(--color-line)] shadow-2xl flex flex-col overflow-hidden text-[var(--color-text)]">
         {/* Header */}
-        <div className="p-6 border-b border-[#e9dfcf] dark:border-[#3a3127] flex items-center justify-between">
+        <div className="p-6 border-b border-[var(--color-line)] flex items-center justify-between">
           <div>
             <h2 id="pagemap-modal-title" className="text-xl font-bold font-serif">
               PageMap — Карта всех страниц и состояний
             </h2>
-            <p className="text-xs text-[#6b5f50] dark:text-[#b5a998]">
-              Кликните по любой карточке для мгновенного перехода в это состояние
+            <p className="text-sm text-[var(--color-secondary-text)]">
+              Нажми на любую карточку для мгновенного перехода в это состояние
             </p>
           </div>
           <button
             onClick={() => setPageMapOpen(false)}
-            className="p-2 text-[#6b5f50] dark:text-[#b5a998] hover:text-[#1f1a14] dark:hover:text-white rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-2 text-[var(--color-secondary-text)] hover:text-[var(--color-text)] rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center"
             aria-label="Закрыть"
           >
             <X className="w-5 h-5" />
@@ -186,7 +186,7 @@ export const PageMapModal: React.FC = () => {
             const items = PAGE_MAP.filter((item) => item.category === cat);
             return (
               <div key={cat}>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-3">
+                <h3 className="text-sm font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 mb-3">
                   {cat}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -195,19 +195,19 @@ export const PageMapModal: React.FC = () => {
                       key={`${item.route}-${item.state}`}
                       type="button"
                       onClick={() => handleNavigate(item.route)}
-                      className="p-3.5 text-left rounded-2xl bg-[#fdf8ef] dark:bg-[#231d16] border border-[#e9dfcf] dark:border-[#3a3127] hover:border-amber-600 hover:shadow-xs transition-all flex flex-col justify-between group min-h-[90px]"
+                      className="p-3.5 text-left rounded-2xl bg-[var(--color-warm-card)] border border-[var(--color-line)] hover:border-amber-600 hover:shadow-xs transition-all flex flex-col justify-between group min-h-[90px]"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-1 mb-1">
-                          <span className="font-bold text-sm text-[#1f1a14] dark:text-[#f5efe6] group-hover:text-amber-700 dark:group-hover:text-amber-400">
+                          <span className="font-bold text-sm text-[var(--color-text)] group-hover:text-amber-700 dark:group-hover:text-amber-400">
                             {item.name}
                           </span>
-                          <ExternalLink className="w-3.5 h-3.5 text-[#6b5f50] dark:text-[#b5a998] group-hover:text-amber-600 shrink-0" />
+                          <ExternalLink className="w-4 h-4 text-[var(--color-secondary-text)] group-hover:text-amber-600 shrink-0" />
                         </div>
-                        <span className="inline-block px-2 py-0.5 mb-1.5 rounded-md text-[11px] font-mono bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] text-amber-800 dark:text-amber-300">
+                        <span className="inline-block px-2 py-0.5 mb-1.5 rounded-md text-sm font-mono bg-[var(--color-card)] border border-[var(--color-line)] text-amber-800 dark:text-amber-300">
                           {item.state}
                         </span>
-                        <p className="text-xs text-[#6b5f50] dark:text-[#b5a998] line-clamp-2">
+                        <p className="text-sm text-[var(--color-secondary-text)] line-clamp-2">
                           {item.description}
                         </p>
                       </div>

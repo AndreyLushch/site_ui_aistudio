@@ -59,12 +59,12 @@ export const TokensPage: React.FC = () => {
   const validateEmail = (val: string): boolean => {
     const trimmed = val.trim();
     if (!trimmed) {
-      setEmailError('Введите адрес электронной почты для отправки чека');
+      setEmailError('Введи адрес электронной почты для отправки чека');
       return false;
     }
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regex.test(trimmed)) {
-      setEmailError('Проверьте правильность адреса (например, name@example.com)');
+      setEmailError('Проверь правильность адреса (например, name@example.com)');
       return false;
     }
     setEmailError(null);
@@ -96,20 +96,20 @@ export const TokensPage: React.FC = () => {
 
       navigate(payUrl);
     } catch (err: any) {
-      setGeneralError(err?.message || 'Не удалось создать заказ. Попробуйте позже.');
+      setGeneralError(err?.message || 'Не удалось создать заказ. Попробуй позже.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div data-testid="site-page-tokens" className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10 pb-28 md:pb-12">
+    <div data-testid="site-page-tokens" className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-10 pb-28 md:pb-12 text-[var(--color-text)]">
       {/* Header */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#1f1a14] dark:text-[#f5efe6] mb-2">
+        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[var(--color-text)] mb-2">
           {texts.tokensPage.title}
         </h1>
-        <p className="text-sm text-[#6b5f50] dark:text-[#b5a998] max-w-2xl">
+        <p className="text-sm text-[var(--color-secondary-text)] max-w-2xl">
           {texts.tokensPage.subtitle}
         </p>
       </div>
@@ -117,7 +117,7 @@ export const TokensPage: React.FC = () => {
       <form onSubmit={handlePay} className="space-y-10">
         {/* Step 1: Packages */}
         <section className="space-y-4">
-          <h2 className="text-lg font-bold font-serif text-[#1f1a14] dark:text-[#f5efe6]">
+          <h2 className="text-lg font-bold font-serif text-[var(--color-text)]">
             {texts.tokensPage.choosePackage}
           </h2>
 
@@ -134,13 +134,13 @@ export const TokensPage: React.FC = () => {
         </section>
 
         {/* Step 2: Delivery Method */}
-        <section className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] shadow-xs space-y-6">
+        <section className="p-6 sm:p-8 rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)] shadow-xs space-y-6">
           <div>
-            <h2 className="text-lg font-bold font-serif text-[#1f1a14] dark:text-[#f5efe6] mb-1">
+            <h2 className="text-lg font-bold font-serif text-[var(--color-text)] mb-1">
               {texts.tokensPage.chooseDelivery}
             </h2>
-            <p className="text-xs text-[#6b5f50] dark:text-[#b5a998]">
-              Выберите, как вы хотите получить жетоны после оплаты
+            <p className="text-sm text-[var(--color-secondary-text)]">
+              Выбирай, как ты хочешь получить жетоны после оплаты
             </p>
           </div>
 
@@ -150,14 +150,14 @@ export const TokensPage: React.FC = () => {
               data-testid="site-delivery-wallet"
               className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
                 delivery === 'wallet' && !isGift
-                  ? 'bg-[#fdf8ef] dark:bg-[#231d16] border-2 border-amber-600 shadow-xs'
-                  : 'border-[#e9dfcf] dark:border-[#3a3127] hover:border-amber-400'
+                  ? 'bg-[var(--color-warm-card)] border-2 border-amber-600 shadow-xs'
+                  : 'border-[var(--color-line)] hover:border-amber-400'
               } ${!user || isGift ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2">
                   <Wallet className="w-5 h-5 text-amber-700 dark:text-amber-400" />
-                  <span className="font-bold text-sm text-[#1f1a14] dark:text-[#f5efe6]">
+                  <span className="font-bold text-sm text-[var(--color-text)]">
                     {texts.tokensPage.deliveryWallet}
                   </span>
                 </div>
@@ -172,23 +172,23 @@ export const TokensPage: React.FC = () => {
                 />
               </div>
 
-              <p className="text-xs text-[#6b5f50] dark:text-[#b5a998] leading-relaxed mb-3">
+              <p className="text-sm text-[var(--color-secondary-text)] leading-relaxed mb-3">
                 {user ? (
                   <>
-                    Жетоны начислятся на ваш профиль <strong>{user.displayName}</strong> сразу после подтверждения банка.
+                    {texts.tokensPage.walletCreditedNote(user.displayName)}
                   </>
                 ) : (
                   <>
-                    Требуется авторизация через Telegram.{' '}
+                    {texts.tokensPage.loginRequiredForWallet}{' '}
                     <button
                       type="button"
                       onClick={(e) => {
                         e.preventDefault();
                         openLoginModal();
                       }}
-                      className="text-amber-700 dark:text-amber-400 font-semibold underline"
+                      className="text-amber-700 dark:text-amber-400 font-semibold underline cursor-pointer"
                     >
-                      Войти сейчас
+                      {texts.header.loginShort}
                     </button>
                   </>
                 )}
@@ -200,14 +200,14 @@ export const TokensPage: React.FC = () => {
               data-testid="site-delivery-code"
               className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
                 delivery === 'code' || isGift
-                  ? 'bg-[#fdf8ef] dark:bg-[#231d16] border-2 border-amber-600 shadow-xs'
-                  : 'border-[#e9dfcf] dark:border-[#3a3127] hover:border-amber-400'
+                  ? 'bg-[var(--color-warm-card)] border-2 border-amber-600 shadow-xs'
+                  : 'border-[var(--color-line)] hover:border-amber-400'
               }`}
             >
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-2">
                   <Gift className="w-5 h-5 text-amber-700 dark:text-amber-400" />
-                  <span className="font-bold text-sm text-[#1f1a14] dark:text-[#f5efe6]">
+                  <span className="font-bold text-sm text-[var(--color-text)]">
                     {texts.tokensPage.deliveryCode}
                   </span>
                 </div>
@@ -221,7 +221,7 @@ export const TokensPage: React.FC = () => {
                 />
               </div>
 
-              <p className="text-xs text-[#6b5f50] dark:text-[#b5a998] leading-relaxed">
+              <p className="text-sm text-[var(--color-secondary-text)] leading-relaxed">
                 {texts.tokensPage.deliveryCodeDesc}
               </p>
             </label>
@@ -231,7 +231,7 @@ export const TokensPage: React.FC = () => {
           <div className="pt-2">
             <label
               data-testid="site-gift-checkbox"
-              className="inline-flex items-center gap-2.5 text-sm font-medium text-[#1f1a14] dark:text-[#f5efe6] cursor-pointer"
+              className="inline-flex items-center gap-2.5 text-sm font-medium text-[var(--color-text)] cursor-pointer"
             >
               <input
                 type="checkbox"
@@ -239,24 +239,24 @@ export const TokensPage: React.FC = () => {
                 onChange={(e) => handleGiftToggle(e.target.checked)}
                 className="w-4 h-4 rounded-sm accent-amber-700 cursor-pointer"
               />
-              <span>Покупаю в подарок другу (сгенерировать подарочный код)</span>
+              <span>{texts.tokensPage.deliveryGiftPrompt}</span>
             </label>
           </div>
         </section>
 
         {/* Step 3: Contact & Legal */}
-        <section className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] shadow-xs space-y-6">
+        <section className="p-6 sm:p-8 rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)] shadow-xs space-y-6">
           <div>
-            <h2 className="text-lg font-bold font-serif text-[#1f1a14] dark:text-[#f5efe6] mb-1">
+            <h2 className="text-lg font-bold font-serif text-[var(--color-text)] mb-1">
               3. Электронная почта и согласие
             </h2>
-            <p className="text-xs text-[#6b5f50] dark:text-[#b5a998]">
+            <p className="text-sm text-[var(--color-secondary-text)]">
               {texts.tokensPage.emailNote}
             </p>
           </div>
 
           <div>
-            <label htmlFor="token-email" className="block text-xs font-bold text-[#6b5f50] dark:text-[#b5a998] mb-1.5">
+            <label htmlFor="token-email" className="block text-sm font-bold text-[var(--color-secondary-text)] mb-1.5">
               {texts.tokensPage.emailLabel} <span className="text-red-500">*</span>
             </label>
             <div className="relative">
@@ -272,17 +272,17 @@ export const TokensPage: React.FC = () => {
                 }}
                 onBlur={() => validateEmail(email)}
                 placeholder={texts.tokensPage.emailPlaceholder}
-                className={`w-full px-4 py-3 rounded-xl bg-[#fdf8ef] dark:bg-[#231d16] border text-sm text-[#1f1a14] dark:text-[#f5efe6] focus:outline-hidden focus:ring-2 focus:ring-amber-500 min-h-[44px] ${
+                className={`w-full px-4 py-3 rounded-xl bg-[var(--color-warm-card)] border text-sm text-[var(--color-text)] focus:outline-hidden focus:ring-2 focus:ring-amber-500 min-h-[44px] ${
                   emailError
                     ? 'border-red-500 focus:ring-red-500'
-                    : 'border-[#e9dfcf] dark:border-[#3a3127]'
+                    : 'border-[var(--color-line)]'
                 }`}
               />
-              <Mail className="w-4 h-4 text-[#6b5f50] absolute right-4 top-3.5 pointer-events-none" />
+              <Mail className="w-4 h-4 text-[var(--color-secondary-text)] absolute right-4 top-3.5 pointer-events-none" />
             </div>
             {emailError && (
-              <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+              <p className="text-sm text-red-600 mt-1.5 flex items-center gap-1">
+                <AlertCircle className="w-4 h-4 shrink-0" />
                 <span>{emailError}</span>
               </p>
             )}
@@ -299,7 +299,7 @@ export const TokensPage: React.FC = () => {
                 onChange={(e) => setOfferAccepted(e.target.checked)}
                 className="w-4 h-4 rounded-sm accent-amber-700 mt-0.5 shrink-0 cursor-pointer"
               />
-              <span className="text-xs text-[#6b5f50] dark:text-[#b5a998] leading-relaxed">
+              <span className="text-sm text-[var(--color-secondary-text)] leading-relaxed">
                 Я соглашаюсь с условиями{' '}
                 <Link to="/offer" target="_blank" className="text-amber-800 dark:text-amber-400 font-semibold underline">
                   публичной оферты
@@ -314,7 +314,7 @@ export const TokensPage: React.FC = () => {
           </div>
 
           {generalError && (
-            <div className="p-3.5 rounded-xl bg-red-100 dark:bg-red-950/40 border border-red-300 dark:border-red-900 text-xs text-red-800 dark:text-red-300 flex items-center gap-2">
+            <div className="p-3.5 rounded-xl bg-[var(--color-danger-bg)] border border-red-300 dark:border-red-900 text-sm text-[var(--color-danger-text)] flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{generalError}</span>
             </div>
@@ -322,14 +322,14 @@ export const TokensPage: React.FC = () => {
         </section>
 
         {/* Step 4: Summary & Pay CTA Box */}
-        <section className="p-6 sm:p-8 rounded-3xl bg-[#fdf8ef] dark:bg-[#231d16] border border-[#e9dfcf] dark:border-[#3a3127] shadow-xs space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e9dfcf] dark:border-[#3a3127]">
+        <section className="p-6 sm:p-8 rounded-3xl bg-[var(--color-warm-card)] border border-[var(--color-line)] shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[var(--color-line)]">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#6b5f50] dark:text-[#b5a998] block mb-1">
+              <span className="text-sm font-bold uppercase tracking-wider text-[var(--color-secondary-text)] block mb-1">
                 {texts.tokensPage.paySummary}
               </span>
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl sm:text-4xl font-black font-serif text-[#1f1a14] dark:text-[#f5efe6] tabular-nums">
+                <span className="text-3xl sm:text-4xl font-black font-serif text-[var(--color-text)] tabular-nums">
                   {selectedPackage?.priceRub || 0} ₽
                 </span>
                 <span className="text-sm font-semibold text-amber-800 dark:text-amber-400">
@@ -339,20 +339,20 @@ export const TokensPage: React.FC = () => {
             </div>
 
             {/* Payment methods badges - Neutral card and SBP symbols, no bank logos */}
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#6b5f50] dark:text-[#b5a998]">
-              <span className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] flex items-center gap-1.5">
-                <CreditCard className="w-3.5 h-3.5" />
-                <span>Карта</span>
+            <div className="flex items-center gap-2 text-sm font-semibold text-[var(--color-secondary-text)]">
+              <span className="px-2.5 py-1 rounded-md bg-[var(--color-card)] border border-[var(--color-line)] flex items-center gap-1.5">
+                <CreditCard className="w-4 h-4" />
+                <span>{texts.tokensPage.methodCard}</span>
               </span>
-              <span className="px-2.5 py-1 rounded-md bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] flex items-center gap-1.5">
-                <QrCode className="w-3.5 h-3.5" />
-                <span>СБП</span>
+              <span className="px-2.5 py-1 rounded-md bg-[var(--color-card)] border border-[var(--color-line)] flex items-center gap-1.5">
+                <QrCode className="w-4 h-4" />
+                <span>{texts.tokensPage.methodSbp}</span>
               </span>
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <p className="text-xs text-[#6b5f50] dark:text-[#b5a998] max-w-md">
+            <p className="text-sm text-[var(--color-secondary-text)] max-w-md">
               {texts.tokensPage.safePaymentNote}
             </p>
 
@@ -360,7 +360,7 @@ export const TokensPage: React.FC = () => {
               type="submit"
               disabled={isSubmitting}
               data-testid="site-pay-button"
-              className="px-8 py-4 rounded-2xl bg-amber-700 hover:bg-amber-800 active:bg-amber-900 text-white font-bold text-base transition-transform hover:scale-102 min-h-[48px] shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-50"
+              className="px-8 py-4 rounded-2xl bg-[var(--color-primary-action)] hover:bg-[var(--color-primary-action-hover)] active:bg-amber-900 text-white font-bold text-base transition-transform hover:scale-102 min-h-[48px] shadow-md flex items-center justify-center gap-2 shrink-0 cursor-pointer disabled:opacity-50"
             >
               <span>{isSubmitting ? 'Создаём заказ…' : `Оплатить ${selectedPackage?.priceRub || 0} ₽`}</span>
               <ArrowRight className="w-5 h-5" />
@@ -370,10 +370,10 @@ export const TokensPage: React.FC = () => {
       </form>
 
       {/* Sticky Bottom Bar for Mobile Viewports (< 768px) - Thumb friendly */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 p-3 bg-white/95 dark:bg-[#1d1915]/95 backdrop-blur-md border-t border-[#e9dfcf] dark:border-[#3a3127] flex items-center justify-between gap-4 shadow-lg">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 p-3 bg-[var(--color-card)]/95 backdrop-blur-md border-t border-[var(--color-line)] flex items-center justify-between gap-4 shadow-lg">
         <div>
-          <span className="text-[11px] text-[#6b5f50] dark:text-[#b5a998] block">Итого:</span>
-          <span className="text-lg font-bold text-[#1f1a14] dark:text-[#f5efe6] tabular-nums">
+          <span className="text-sm text-[var(--color-secondary-text)] block">{texts.tokensPage.totalLabel}</span>
+          <span className="text-lg font-bold text-[var(--color-text)] tabular-nums">
             {selectedPackage?.priceRub || 0} ₽
           </span>
         </div>
@@ -381,7 +381,7 @@ export const TokensPage: React.FC = () => {
           type="button"
           onClick={handlePay}
           data-testid="site-pay-button-mobile"
-          className="px-6 py-2.5 rounded-xl bg-amber-700 text-white font-bold text-sm min-h-[44px] flex items-center justify-center shadow-sm"
+          className="px-6 py-2.5 rounded-xl bg-[var(--color-primary-action)] text-white font-bold text-sm min-h-[44px] flex items-center justify-center shadow-sm"
         >
           Оплатить
         </button>

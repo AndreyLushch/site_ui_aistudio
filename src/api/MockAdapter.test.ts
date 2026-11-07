@@ -13,33 +13,53 @@ test('MockAdapter loads games and packages correctly', async () => {
   assert.equal(packages[2].badge, 'Выгодно');
 });
 
-test('MockAdapter handles login and logout lifecycle', async () => {
+test('MockAdapter handles login and logout lifecycle with conditional user data', async () => {
   const adapter = new MockAdapter();
   adapter.setSession(null);
   assert.equal(await adapter.getSession(), null);
 
   const loggedIn = await adapter.loginWithTelegram();
   assert.notEqual(loggedIn, null);
-  assert.equal(loggedIn?.displayName, 'Андрей Лущиков');
+  assert.equal(loggedIn?.displayName, USER_FIXTURES.standard.displayName);
 
   await adapter.logout();
   assert.equal(await adapter.getSession(), null);
 });
 
-test('MockAdapter order creation and status transition', async () => {
+test('MockAdapter enforces Rule 8: guest receives empty orders and cannot create wallet delivery order', async () => {
   const adapter = new MockAdapter();
-  const { orderId, payUrl } = await adapter.createOrder({
+  adapter.setSession(null);
+
+  // Guest gets empty list
+  const guestOrders = await adapter.listOrders();
+  assert.deepEqual(guestOrders, []);
+
+  // Guest cannot create wallet delivery order
+  await assert.rejects(
+    async () => {
+      await adapter.createOrder({
+        packageId: 'standard',
+        email: 'guest@example.com',
+        delivery: 'wallet',
+        offerAccepted: true,
+      });
+    },
+    { message: /Для доставки на кошелёк необходимо войти через Telegram/ }
+  );
+
+  // Guest CAN create code delivery order
+  const { orderId } = await adapter.createOrder({
     packageId: 'standard',
-    email: 'test@mail.ru',
-    delivery: 'wallet',
+    email: 'guest@example.com',
+    delivery: 'code',
     offerAccepted: true,
   });
+  assert.ok(orderId);
 
-  assert.equal(payUrl.includes(orderId), true);
-  const order = await adapter.getOrder(orderId);
-  assert.notEqual(order, null);
-  assert.equal(order?.status, 'pending');
-  assert.equal(order?.tokens, 20);
+  // Log in -> now listOrders returns orders
+  await adapter.loginWithTelegram();
+  const userOrders = await adapter.listOrders();
+  assert.ok(userOrders.length > 0);
 });
 
 test('MockAdapter code redemption handles login requirement, invalid codes and rate limiting', async () => {
@@ -47,7 +67,7 @@ test('MockAdapter code redemption handles login requirement, invalid codes and r
 
   // 1. Without session -> login_required
   adapter.setSession(null);
-  const res1 = await adapter.redeemCode('DEMO-PASS-50TK-2026');
+  const res1 = await adapter.redeemCode('DEM2-PASS-59TK-2726');
   assert.equal(res1.ok, false);
   if (!res1.ok) assert.equal(res1.reason, 'login_required');
 
@@ -55,17 +75,17 @@ test('MockAdapter code redemption handles login requirement, invalid codes and r
   adapter.setSession({ ...USER_FIXTURES.standard, balanceTokens: 10 });
 
   // 2. Already redeemed code
-  const resUsed = await adapter.redeemCode('USED-CODE-10TK-PAST');
+  const resUsed = await adapter.redeemCode('USED-CARD-29TK-PAST');
   assert.equal(resUsed.ok, false);
   if (!resUsed.ok) assert.equal(resUsed.reason, 'already_redeemed');
 
   // 3. Expired code
-  const resExpired = await adapter.redeemCode('OLD1-EXPR-20TK-PAST');
+  const resExpired = await adapter.redeemCode('EXPR-CARD-24TK-PAST');
   assert.equal(resExpired.ok, false);
   if (!resExpired.ok) assert.equal(resExpired.reason, 'expired');
 
-  // 4. Successful redemption
-  const resSuccess = await adapter.redeemCode('DEMO-PASS-50TK-2026');
+  // 4. Successful redemption with valid alphabet code
+  const resSuccess = await adapter.redeemCode('DEM2-PASS-59TK-2726');
   assert.equal(resSuccess.ok, true);
   if (resSuccess.ok) {
     assert.equal(resSuccess.tokens, 50);
@@ -73,18 +93,18 @@ test('MockAdapter code redemption handles login requirement, invalid codes and r
   }
 
   // 5. Subsequent attempt of same code -> already_redeemed
-  const resAgain = await adapter.redeemCode('DEMO-PASS-50TK-2026');
+  const resAgain = await adapter.redeemCode('DEM2-PASS-59TK-2726');
   assert.equal(resAgain.ok, false);
   if (!resAgain.ok) assert.equal(resAgain.reason, 'already_redeemed');
 
   // 6. Test rate limit after 5 failed invalid attempts
   adapter.resetRateLimit();
   for (let i = 0; i < 4; i++) {
-    const r = await adapter.redeemCode(`INVALID-CODE-${i}000`);
+    const r = await adapter.redeemCode(`INVALID-CD23-4567-89AB`);
     assert.equal(r.ok, false);
     if (!r.ok) assert.equal(r.reason, 'not_found');
   }
-  const r5 = await adapter.redeemCode('INVALID-CODE-5000');
+  const r5 = await adapter.redeemCode('INVALID-CD23-4567-89AB');
   assert.equal(r5.ok, false);
   if (!r5.ok) assert.equal(r5.reason, 'rate_limited');
 });

@@ -68,11 +68,11 @@ export class MockAdapter implements SiteAdapter {
       this.orders.set(ord.id, { ...ord });
     }
 
-    // Populate pre-configured test codes
-    this.seedCode('DEMO-PASS-50TK-2026', 50, false, false);
-    this.seedCode('TEST-GIFT-20TK-FREE', 20, false, false);
-    this.seedCode('USED-CODE-10TK-PAST', 10, true, false);
-    this.seedCode('OLD1-EXPR-20TK-PAST', 20, false, true);
+    // Populate pre-configured test codes (strictly from alphabet 23456789ABCDEFGHJKLMNPQRSTUVWXYZ)
+    this.seedCode('DEM2-PASS-59TK-2726', 50, false, false);
+    this.seedCode('TGFT-PLAY-28TK-FREE', 20, false, false);
+    this.seedCode('USED-CARD-29TK-PAST', 10, true, false);
+    this.seedCode('EXPR-CARD-24TK-PAST', 20, false, true);
 
     // Try reading localStorage if in browser
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -174,6 +174,12 @@ export class MockAdapter implements SiteAdapter {
     offerAccepted: true;
   }): Promise<{ orderId: string; payUrl: string }> {
     await this.delay(150);
+
+    // Rule 8: Заказ с delivery: 'wallet' без входа создать нельзя.
+    if (input.delivery === 'wallet' && !this.currentUser) {
+      throw new Error('Для доставки на кошелёк необходимо войти через Telegram');
+    }
+
     const pkg = this.packages.find((p) => p.id === input.packageId);
     if (!pkg) {
       throw new Error('Выбранный пакет жетонов не найден');
@@ -211,6 +217,10 @@ export class MockAdapter implements SiteAdapter {
 
   public async listOrders(): Promise<Order[]> {
     await this.delay(120);
+    // Rule 8: listOrders возвращает только заказы вошедшего, гость получает пустой список.
+    if (!this.currentUser) {
+      return [];
+    }
     const all = Array.from(this.orders.values());
     all.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
     return all;

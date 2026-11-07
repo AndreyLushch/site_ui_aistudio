@@ -20,6 +20,8 @@ export interface ThemeColors {
   successBg: string;
   dangerText: string;
   dangerBg: string;
+  tg: string;
+  tgHover: string;
 }
 
 export const lightTokens: ThemeColors = {
@@ -39,6 +41,8 @@ export const lightTokens: ThemeColors = {
   successBg: '#e7f6ec',
   dangerText: '#b91c1c',
   dangerBg: '#fdecec',
+  tg: '#2AABEE',
+  tgHover: '#229ed9',
 };
 
 export const darkTokens: ThemeColors = {
@@ -58,6 +62,8 @@ export const darkTokens: ThemeColors = {
   successBg: 'rgba(74, 222, 128, 0.12)',
   dangerText: '#f87171',
   dangerBg: 'rgba(248, 113, 113, 0.12)',
+  tg: '#2AABEE',
+  tgHover: '#229ed9',
 };
 
 export type StylePresetId = 'cozy' | 'neo' | 'night';

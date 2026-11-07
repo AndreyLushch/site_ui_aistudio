@@ -3,6 +3,7 @@ import { SiteGame } from '../types';
 import { useApp } from '../context/AppContext';
 import { GameCard } from '../components/GameCard';
 import { Users, Clock, Filter, RotateCcw, AlertTriangle } from 'lucide-react';
+import { texts } from '../texts';
 
 export const CatalogPage: React.FC = () => {
   const { adapter } = useApp();
@@ -84,16 +85,16 @@ export const CatalogPage: React.FC = () => {
 
   if (error) {
     return (
-      <div data-testid="site-page-games" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 text-center">
-        <div className="max-w-md mx-auto p-8 rounded-3xl bg-white dark:bg-[#1d1915] border border-red-200 dark:border-red-900/40 shadow-sm">
+      <div data-testid="site-page-games" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 text-center text-[var(--color-text)]">
+        <div className="max-w-md mx-auto p-8 rounded-3xl bg-[var(--color-card)] border border-red-200 dark:border-red-900/40 shadow-sm">
           <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" />
           <h2 className="text-xl font-bold font-serif mb-2">Каталог временно недоступен</h2>
-          <p className="text-sm text-[#6b5f50] dark:text-[#b5a998] mb-6">{error}</p>
+          <p className="text-sm text-[var(--color-secondary-text)] mb-6">{error}</p>
           <button
             type="button"
             onClick={fetchGames}
             data-testid="site-retry-catalog"
-            className="px-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-semibold text-sm transition-colors min-h-[44px]"
+            className="px-6 py-2.5 rounded-xl bg-[var(--color-primary-action)] hover:bg-[var(--color-primary-action-hover)] text-white font-semibold text-sm transition-colors min-h-[44px]"
           >
             Повторить попытку
           </button>
@@ -103,21 +104,21 @@ export const CatalogPage: React.FC = () => {
   }
 
   return (
-    <div data-testid="site-page-games" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+    <div data-testid="site-page-games" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8 text-[var(--color-text)]">
       {/* Title */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#1f1a14] dark:text-[#f5efe6] mb-2">
+        <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[var(--color-text)] mb-2">
           Каталог игр
         </h1>
-        <p className="text-sm text-[#6b5f50] dark:text-[#b5a998]">
-          Выбирайте игру под состав вашей компании, длительность и настроение вечера.
+        <p className="text-sm text-[var(--color-secondary-text)]">
+          Выбирай игру под состав твоей компании, длительность и настроение вечера.
         </p>
       </div>
 
       {/* Filters Bar */}
-      <div className="p-5 rounded-2xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] shadow-xs space-y-4">
+      <div className="p-5 rounded-2xl bg-[var(--color-card)] border border-[var(--color-line)] shadow-xs space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-sm font-bold text-[#1f1a14] dark:text-[#f5efe6]">
+          <div className="flex items-center gap-2 text-sm font-bold text-[var(--color-text)]">
             <Filter className="w-4 h-4 text-amber-700 dark:text-amber-400" />
             <span>Фильтры подбора</span>
           </div>
@@ -125,10 +126,10 @@ export const CatalogPage: React.FC = () => {
             <button
               type="button"
               onClick={resetFilters}
-              className="text-xs font-semibold text-amber-800 dark:text-amber-400 hover:underline flex items-center gap-1"
+              className="text-sm font-semibold text-amber-800 dark:text-amber-400 hover:underline flex items-center gap-1 min-h-[44px]"
             >
-              <RotateCcw className="w-3 h-3" />
-              <span>Сбросить всё</span>
+              <RotateCcw className="w-4 h-4" />
+              <span>{texts.actions.resetAll}</span>
             </button>
           )}
         </div>
@@ -136,12 +137,12 @@ export const CatalogPage: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
           {/* 1. Players count */}
           <div>
-            <label className="text-xs font-bold text-[#6b5f50] dark:text-[#b5a998] block mb-1.5">
-              Сколько вас человек:
+            <label className="text-sm font-bold text-[var(--color-secondary-text)] block mb-1.5">
+              {texts.catalog.playersFilterLabel}
             </label>
             <div className="flex flex-wrap gap-1">
               {[
-                { id: 'all', label: 'Все' },
+                { id: 'all', label: texts.catalog.allCount },
                 { id: '2-4', label: '2–4' },
                 { id: '5-8', label: '5–8' },
                 { id: '9-15', label: '9–15' },
@@ -151,10 +152,10 @@ export const CatalogPage: React.FC = () => {
                   key={item.id}
                   type="button"
                   onClick={() => setPlayerFilter(item.id as any)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors min-h-[38px] ${
+                  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors min-h-[44px] ${
                     playerFilter === item.id
-                      ? 'bg-amber-700 text-white font-bold'
-                      : 'bg-[#f3ece1] dark:bg-[#2a231b] text-[#1f1a14] dark:text-[#f5efe6] hover:bg-amber-100 dark:hover:bg-amber-950/40'
+                      ? 'bg-[var(--color-primary-action)] text-white font-bold'
+                      : 'bg-[var(--color-soft-bg)] text-[var(--color-text)] hover:bg-amber-100 dark:hover:bg-amber-950/40'
                   }`}
                 >
                   {item.label}
@@ -165,24 +166,24 @@ export const CatalogPage: React.FC = () => {
 
           {/* 2. Duration */}
           <div>
-            <label className="text-xs font-bold text-[#6b5f50] dark:text-[#b5a998] block mb-1.5">
-              Длительность партии:
+            <label className="text-sm font-bold text-[var(--color-secondary-text)] block mb-1.5">
+              {texts.catalog.durationFilterLabel}
             </label>
             <div className="flex flex-wrap gap-1">
               {[
-                { id: 'all', label: 'Любая' },
-                { id: 'short', label: 'до 30 мин' },
-                { id: 'medium', label: '30–60 мин' },
-                { id: 'long', label: 'от 60 мин' },
+                { id: 'all', label: texts.catalog.anyDuration },
+                { id: 'short', label: texts.catalog.shortDuration },
+                { id: 'medium', label: texts.catalog.mediumDuration },
+                { id: 'long', label: texts.catalog.longDuration },
               ].map((item) => (
                 <button
                   key={item.id}
                   type="button"
                   onClick={() => setDurationFilter(item.id as any)}
-                  className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors min-h-[38px] ${
+                  className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors min-h-[44px] ${
                     durationFilter === item.id
-                      ? 'bg-amber-700 text-white font-bold'
-                      : 'bg-[#f3ece1] dark:bg-[#2a231b] text-[#1f1a14] dark:text-[#f5efe6] hover:bg-amber-100 dark:hover:bg-amber-950/40'
+                      ? 'bg-[var(--color-primary-action)] text-white font-bold'
+                      : 'bg-[var(--color-soft-bg)] text-[var(--color-text)] hover:bg-amber-100 dark:hover:bg-amber-950/40'
                   }`}
                 >
                   {item.label}
@@ -193,15 +194,15 @@ export const CatalogPage: React.FC = () => {
 
           {/* 3. Category / Tag */}
           <div>
-            <label className="text-xs font-bold text-[#6b5f50] dark:text-[#b5a998] block mb-1.5">
-              Категория:
+            <label className="text-sm font-bold text-[var(--color-secondary-text)] block mb-1.5">
+              {texts.catalog.categoryFilterLabel}
             </label>
             <select
               value={tagFilter}
               onChange={(e) => setTagFilter(e.target.value)}
-              className="w-full px-3 py-2 text-xs font-medium bg-[#f3ece1] dark:bg-[#2a231b] text-[#1f1a14] dark:text-[#f5efe6] rounded-lg border-0 focus:ring-2 focus:ring-amber-500 min-h-[38px]"
+              className="w-full px-3 py-2 text-sm font-medium bg-[var(--color-soft-bg)] text-[var(--color-text)] rounded-lg border-0 focus:ring-2 focus:ring-amber-500 min-h-[44px]"
             >
-              <option value="all">Все категории</option>
+              <option value="all">{texts.catalog.allCategories}</option>
               {allTags.map((tag) => (
                 <option key={tag} value={tag}>
                   {tagLabels[tag] || tag}
@@ -216,21 +217,21 @@ export const CatalogPage: React.FC = () => {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-80 rounded-3xl bg-white dark:bg-[#1d1915] animate-pulse border border-[#e9dfcf] dark:border-[#3a3127]" />
+            <div key={i} className="h-80 rounded-3xl bg-[var(--color-card)] animate-pulse border border-[var(--color-line)]" />
           ))}
         </div>
       ) : filteredGames.length === 0 ? (
-        <div className="p-12 text-center rounded-3xl bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127]">
-          <p className="text-base font-bold font-serif text-[#1f1a14] dark:text-[#f5efe6] mb-2">
+        <div className="p-12 text-center rounded-3xl bg-[var(--color-card)] border border-[var(--color-line)]">
+          <p className="text-base font-bold font-serif text-[var(--color-text)] mb-2">
             Игр по выбранным фильтрам не найдено
           </p>
-          <p className="text-sm text-[#6b5f50] dark:text-[#b5a998] mb-4">
-            Попробуйте расширить параметры количества игроков или длительности партии.
+          <p className="text-sm text-[var(--color-secondary-text)] mb-4">
+            Попробуй расширить параметры количества игроков или длительности партии.
           </p>
           <button
             type="button"
             onClick={resetFilters}
-            className="px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-semibold text-sm transition-colors min-h-[44px]"
+            className="px-5 py-2.5 rounded-xl bg-[var(--color-primary-action)] hover:bg-[var(--color-primary-action-hover)] text-white font-semibold text-sm transition-colors min-h-[44px]"
           >
             Сбросить фильтры
           </button>

@@ -45,7 +45,7 @@ function MainLayout() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col bg-[#f6f2ec] dark:bg-[#13110e] text-[#1f1a14] dark:text-[#f5efe6] transition-colors duration-200 ${
+      className={`min-h-screen flex flex-col bg-[var(--color-page-bg)] text-[var(--color-text)] transition-colors duration-200 ${
         previewWidth ? 'py-4 bg-stone-900/10 dark:bg-black/50' : ''
       }`}
     >

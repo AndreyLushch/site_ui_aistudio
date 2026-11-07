@@ -2,6 +2,7 @@ import React from 'react';
 import { TokenPackage } from '../types';
 import { TokenCoinIcon } from './TokenCoinIcon';
 import { Check } from 'lucide-react';
+import { texts } from '../texts';
 
 interface TokenPackageCardProps {
   pkg: TokenPackage;
@@ -31,13 +32,13 @@ export const TokenPackageCard: React.FC<TokenPackageCardProps> = ({
       }}
       className={`relative cursor-pointer p-6 rounded-3xl transition-all duration-200 flex flex-col justify-between ${
         isSelected
-          ? 'bg-[#fdf8ef] dark:bg-[#231d16] border-2 border-amber-600 shadow-md ring-2 ring-amber-500/20'
-          : 'bg-white dark:bg-[#1d1915] border border-[#e9dfcf] dark:border-[#3a3127] hover:border-amber-400'
+          ? 'bg-[var(--color-warm-card)] border-2 border-amber-600 shadow-md ring-2 ring-amber-500/20'
+          : 'bg-[var(--color-card)] border border-[var(--color-line)] hover:border-amber-400'
       }`}
     >
       {/* Badge if present */}
       {pkg.badge && (
-        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-amber-600 text-white text-xs font-bold shadow-xs">
+        <span className="absolute -top-3 right-6 px-3 py-1 rounded-full bg-amber-600 text-white text-sm font-bold shadow-xs">
           {pkg.badge}
         </span>
       )}
@@ -51,7 +52,7 @@ export const TokenPackageCard: React.FC<TokenPackageCardProps> = ({
             className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
               isSelected
                 ? 'border-amber-600 bg-amber-600 text-white'
-                : 'border-[#e9dfcf] dark:border-[#3a3127]'
+                : 'border-[var(--color-line)]'
             }`}
           >
             {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -59,22 +60,22 @@ export const TokenPackageCard: React.FC<TokenPackageCardProps> = ({
         </div>
 
         <div className="mb-2">
-          <div className="text-3xl font-extrabold font-serif text-[#1f1a14] dark:text-[#f5efe6] tabular-nums">
+          <div className="text-3xl font-extrabold font-serif text-[var(--color-text)] tabular-nums">
             {pkg.tokens}
           </div>
-          <div className="text-sm font-medium text-[#6b5f50] dark:text-[#b5a998]">
-            жетонов
+          <div className="text-sm font-medium text-[var(--color-secondary-text)]">
+            {texts.accountPage.tokensWord}
           </div>
         </div>
 
-        <p className="text-xs text-[#6b5f50] dark:text-[#b5a998] mb-4">
+        <p className="text-sm text-[var(--color-secondary-text)] mb-4">
           ≈ {pricePerToken} ₽ за жетон
         </p>
       </div>
 
-      <div className="pt-4 border-t border-[#e9dfcf] dark:border-[#3a3127] flex items-baseline justify-between">
-        <span className="text-xs text-[#6b5f50] dark:text-[#b5a998]">Итого:</span>
-        <span className="text-xl font-bold text-[#1f1a14] dark:text-[#f5efe6] tabular-nums">
+      <div className="pt-4 border-t border-[var(--color-line)] flex items-baseline justify-between">
+        <span className="text-sm text-[var(--color-secondary-text)]">{texts.tokensPage.totalLabel}</span>
+        <span className="text-xl font-bold text-[var(--color-text)] tabular-nums">
           {pkg.priceRub} ₽
         </span>
       </div>
